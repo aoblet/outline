@@ -9,7 +9,7 @@ import passportMiddleware from "@server/middlewares/passport";
 
 const LDAP_URL = process.env.LDAP_URL;
 const LDAP_USER = process.env.LDAP_USER;
-const LDAP_PASSWORD = process.env.LDAP_PASSWORD;
+const LDAP_PASSWORD_BASE64 = process.env.LDAP_PASSWORD_BASE64;
 const LDAP_SEARCH_BASE = process.env.LDAP_SEARCH_BASE;
 const LDAP_DOMAIN = process.env.LDAP_DOMAIN;
 const LDAP_COMPANY = process.env.LDAP_COMPANY;
@@ -30,8 +30,8 @@ if (LDAP_URL) {
         server: {
           url: LDAP_URL,
           bindDN: LDAP_USER,
-          bindCredentials: LDAP_PASSWORD,
-          searchBase:LDAP_SEARCH_BASE,
+          bindCredentials: atob(LDAP_PASSWORD_BASE64),
+          searchBase: LDAP_SEARCH_BASE,
           searchFilter: LDAP_USER_FIELD + '={{username}}',
           passReqToCallback: true,
         }  
